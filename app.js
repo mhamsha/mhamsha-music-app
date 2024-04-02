@@ -4,6 +4,7 @@ let songUL;
 let songsName = [];
 let reducedSongsName = [];
 let songImage;
+let volumeUnit = 0.5;
 
 async function getSongs(folder) {
   currFolder = folder;
@@ -126,6 +127,7 @@ async function main(folderName = "daily mix 1") {
               if (presentImg.src.endsWith("svg/musicPlay.svg")) {
                 playCircle.src = "svg/playCircle.svg";
                 audio.play();
+                audio.volume = volumeUnit;
               } else {
                 // console.log(presentImg);
               }
@@ -137,9 +139,11 @@ async function main(folderName = "daily mix 1") {
           audio.pause();
           audio = new Audio(songs[index]);
           audio.play();
+          audio.volume = volumeUnit;
         } else {
           audio = new Audio(songs[index]);
           audio.play();
+          audio.volume = volumeUnit;
           audioPlay = audio;
         }
       }
@@ -156,6 +160,7 @@ async function main(folderName = "daily mix 1") {
             if (presentImg.src.endsWith("svg/musicPlay.svg")) {
               playCircle.src = "svg/playCircle.svg";
               audio.play();
+              audio.volume = volumeUnit;
             } else {
               // console.log(presentImg);
             }
@@ -208,7 +213,9 @@ async function main(folderName = "daily mix 1") {
       previousImg = imgElements[index];
       presentImg = imgElements[index];
     }
+
     audio.play();
+    audio.volume = volumeUnit;
   });
 
   next.addEventListener("click", () => {
@@ -223,7 +230,9 @@ async function main(folderName = "daily mix 1") {
       previousImg = imgElements[index];
       presentImg = imgElements[index];
     }
+
     audio.play();
+    audio.volume = volumeUnit;
   });
   // * This is for the seek bar click functionality
   let songBar = document.querySelector(".songlineBar");
@@ -231,6 +240,44 @@ async function main(folderName = "daily mix 1") {
     let move = (e.offsetX / songBar.clientWidth) * audio.duration;
     audio.currentTime = move;
   });
+  // * This is for the volume bar click functionality
+  let volSlider = document.querySelector(".volumeBtn .slider");
+  volSlider.addEventListener("change", (e) => {
+    // volumeUnit = 1 - (e.offsetY / volSlider.clientHeight);
+    volumeUnit = e.target.value / 100;
+    audio.volume = volumeUnit;
+  });
+  // * changing the src img of volume btn
+  let volImg = document.querySelector(".volumeBtn img");
+  volImg.addEventListener("click", () => {
+    if (volImg.src.endsWith("svg/vol-on.svg")) {
+      volImg.src = "svg/vol-off.svg";
+      volImg.style.color = "green";
+      audio.volume = 0;
+    } else {
+      volImg.src = "svg/vol-on.svg";
+      audio.volume = volumeUnit;
+    }
+  });
+
+  // * someone hover the volume btn then the volume bar will be shown otherwise hidden
+  let volDiv = document.querySelector(".volumeBtn");
+  let timeOutId;
+
+  volImg.addEventListener("mouseover", () => {
+    volSlider.style.display = "block";
+  });
+
+  volDiv.addEventListener("mouseout", () => {
+    timeOutId = setTimeout( () =>{
+      volSlider.style.display = "none";
+    }, 500); 
+  });
+  volDiv.addEventListener("mouseover", () => {
+    clearTimeout(timeOutId);
+  });
+
+
 }
 
 displayAlbums();
