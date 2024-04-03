@@ -6,15 +6,21 @@
     <title>Spotify - Web Player: Music for everyone</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="utility.css" />
+    <link rel="stylesheet" href="responsive.css" />
   </head>
   <body>
     <div class="main">
       <section class="leftSide">
         <div class="homeSection">
+          <button type="button" class="forwardBtn">
+            <img src="svg/forwardBtn.svg" alt="forwardButton" />
+          </button>
+
           <ul class="">
             <li><img src="svg/home.svg" alt="home" /></li>
             <li>HOME</li>
           </ul>
+
           <ul class="">
             <li><img src="svg/search.svg" alt="search" /></li>
             <li>SEARCH</li>
@@ -36,10 +42,12 @@
       <section class="RightSide">
         <div class="navBar">
           <div class="leftBar">
-            <button><img src="svg/backBtn.svg" alt="backButton" /></button>
-            <button>
-              <img src="svg/forwardBtn.svg" alt="forwardButton" />
+            <button type="button" class="backBtn">
+              <img src="svg/backBtn.svg" alt="backButton" />
             </button>
+            <!-- <button type="button" class="forwardBtn">
+              <img src="svg/forwardBtn.svg" alt="forwardButton" />
+            </button> -->
           </div>
           <div class="rightBar">
             <button type="button" class="signIn">Sign In</button>
@@ -48,17 +56,14 @@
         </div>
         <div class="playList">
           <h2>Made For You.</h2>
-          <div class="cardDiv">
-         
-            
-           
-          </div>
-        </div>
-        <div class="playlist"></div>
+          <div class="cardDiv"></div>
+          <!-- <div class="playlist"></div> -->
 
-        <div class="playSection">
-          <div class="aboveBar">
-            <div class="songName">Alone by Alan Walker</div>
+          <!-- <div class="playSection"> -->
+          <div class="playSection">
+            <div class="songName">Song--Name</div>
+            <div class="songlineBar"></div>
+            <div class="songcircle"></div>
             <div class="songbuttons">
               <ul class="songbuttonsUl">
                 <li>
@@ -75,6 +80,8 @@
               </ul>
             </div>
             <div class="songTime">00:00/00:00</div>
+            <div class="songTimeCurr">00:00</div>
+            <div class="songTimeDura">00:00</div>
             <div class="volumeBtn">
               <input
                 type="range"
@@ -83,15 +90,12 @@
                 value="50"
                 class="slider"
                 id="myRange"
-                
               />
               <img src="svg/vol-on.svg" alt="volume" />
             </div>
-
           </div>
-          <div class="songlineBar"></div>
-          <div class="songcircle"></div>
         </div>
+        <!-- </div> -->
       </section>
     </div>
   </body>

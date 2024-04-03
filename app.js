@@ -8,7 +8,8 @@ let volumeUnit = 0.5;
 
 async function getSongs(folder) {
   currFolder = folder;
-  const url = `http://127.0.0.1:5500/${folder}/`;
+  // const url = `https://127.0.0.1:5500/${folder}/`;
+  const url = `http://192.168.100.2:5500/${folder}/`;
   let songsName = [];
   const response = await fetch(url);
   const data = await response.text();
@@ -38,7 +39,8 @@ async function getSongs(folder) {
 }
 async function displayAlbums() {
   // console.log("displaying albums")
-  let a = await fetch(`http://127.0.0.1:5500/songs/`);
+  // let a = await fetch(`https://127.0.0.1:5500/songs/`);
+  let a = await fetch(`http://192.168.100.2:5500/songs/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -189,10 +191,18 @@ async function main(folderName = "daily mix 1") {
         document.querySelector(".songTime").innerHTML = `${secondsToMinutes(
           audio.currentTime
         )}/${secondsToMinutes(audio.duration)}`;
-
+        // * add the current time of the song the seek bar when meida querry hit 600px max width or minunum width
+        if (window.matchMedia("(max-width: 768px)").matches) {
+          document.querySelector(
+            ".songTimeCurr"
+          ).innerHTML = `${secondsToMinutes(audio.currentTime)}`;
+          document.querySelector(
+            ".songTimeDura"
+          ).innerHTML = `${secondsToMinutes(audio.duration)}`;
+        }
         // * To move the seek bar from left to right
         document.querySelector(".songcircle").style.left =
-          (audio.currentTime / audio.duration) * 100 + "%";
+          (audio.currentTime / audio.duration) * 98.5 + "%";
       });
     });
   });
@@ -269,16 +279,28 @@ async function main(folderName = "daily mix 1") {
   });
 
   volDiv.addEventListener("mouseout", () => {
-    timeOutId = setTimeout( () =>{
+    timeOutId = setTimeout(() => {
       volSlider.style.display = "none";
-    }, 500); 
+    }, 500);
   });
   volDiv.addEventListener("mouseover", () => {
     clearTimeout(timeOutId);
   });
-
-
 }
 
+// *  Event showing left side and hide right side and vice versa
+document.querySelector(".backBtn").addEventListener("click", () => {
+ 
+  document.querySelector(".leftSide").style.left = "0";
+  
+  
+ 
+  
+});
+document.querySelector(".forwardBtn").addEventListener("click", () => {
+  
+  document.querySelector(".leftSide").style.left = "-100%";
+
+});
 displayAlbums();
 main();
