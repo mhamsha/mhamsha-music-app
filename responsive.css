@@ -1,0 +1,133 @@
+@media only screen and (max-width: 768px) {
+    .leftSide {
+        /* display: none; */
+        position: fixed;
+        width: 100vw;
+        left: -100%;
+        transition: all 1s;
+        background-color: #121212;
+        z-index: 1;
+        height: 100vh;
+    }
+    .homeSection{
+        width: 98vw;;
+        height: 18%;
+    }
+    .librarySection{
+        width: 98vw;
+        height: 89%;
+
+    }
+    .songList{
+        max-height: 22rem;
+
+    }
+
+    .RightSide {
+        /* display: none; */
+        width: 100vw;
+        
+
+    }
+
+
+    .navBar {
+        width: 98vw;
+    }
+    .forwardBtn{
+        display: block;
+    }
+    .backBtn{
+        display: block;
+    }
+
+    .playList {
+        width: 100vw;
+        height: 100%;
+    }
+    .cardDiv{
+        height: 59vh;
+    }
+
+    .playSection {
+        z-index: 2;
+        flex-direction: column;
+        width: 100vw;
+        height: 80px;
+        background: #0d0f16b8;
+        position: fixed;
+        bottom: 0px;
+        border-radius: 8px;
+    }
+
+    .songName {
+        margin-left: 0px;
+        padding: 7px;
+        width: 100%;
+        text-align: center;
+
+    }
+
+    .songlineBar {
+        background-color: #afafc7;
+        height: 4px;
+        width: 100vw;
+        border-radius: 10px;
+        position: absolute;
+        cursor: pointer;
+        top: 36px;
+    }
+
+    .songcircle {
+        top: 33px;
+    }
+
+    .songbuttons {
+        margin: 0px;
+        top: 45px;
+        position: absolute;
+    }
+
+    .songTime {
+        display: none;
+    }
+
+    .songTimeCurr {
+        display: inline;
+        color: rgb(255, 255, 255);
+        margin-left: 10px;
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+    }
+
+    .songTimeDura {
+        display: inline;
+        color: rgb(255, 255, 255);
+        margin-right: 10px;
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+    }
+
+    .volumeBtn {
+        position: absolute;
+        bottom: 18px;
+        right: 202px;
+
+    }
+
+    .volumeBtn img {
+        display: none;
+    }
+
+    .volumeBtn input {
+
+        bottom: -8px;
+        left: 65px;
+        width: 55px;
+        height: 15px;
+        appearance: slider-horizontal;
+        display: block;
+    }
+}

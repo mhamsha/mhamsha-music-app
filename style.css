@@ -15,7 +15,10 @@ body {
 .border {
     border: 2px solid white;
 }
-
+.leftSide{
+    /* position: fixed; */
+    /* left: -100%; */
+}
 .homeSection {
     width: 28vw;
     height: 17vh;
@@ -23,6 +26,7 @@ body {
     border-radius: 10px;
     background-color: #121212;
     padding-top: 10px;
+    position: relative;
 
 }
 
@@ -137,7 +141,7 @@ body {
 
 }
 
-.leftBar button {
+.backBtn, .forwardBtn {
     width: 24px;
     height: 28px;
     margin: 17px -13px 0px 14px;
@@ -145,12 +149,24 @@ body {
     outline: none;
     border: none;
     border-radius: 32px;
+    cursor: pointer;
+    display: none;
+    
+    
 }
-
-.leftBar img {
+.backBtn img , .forwardBtn img{
     filter: invert(1);
     width: 10px;
+    
+
 }
+.forwardBtn{
+    position: absolute;
+    right: 30px;
+    top: 0px;
+
+}
+
 
 .leftBar {
     display: flex;
@@ -160,7 +176,7 @@ body {
 .rightBar {
     display: flex;
     gap: 20px;
-
+    
 
 }
 
@@ -231,14 +247,14 @@ body {
     border-radius: 10px;
 
 }
-
 .playSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #1d1d22;
-    /* border: 2px solid green; */
     height: 50px;
     width: 68vw;
     margin-top: 5px;
-    /* margin-left: 30px; */
     border-radius: 10px;
     position: relative;
 }
@@ -270,7 +286,7 @@ body {
 
 .songlineBar {
     background-color: #afafc7;
-    height: 3px;
+    height: 4px;
     width: 100%;
     /* margin-left: 6px; */
     border-radius: 10px;
@@ -306,12 +322,19 @@ body {
     right: -30px;
 }
 
+.songTimeCurr {
+    display: none;
+}
+.songTimeDura {
+    display: none;
+}
 .volumeBtn {
     display: flex;
     flex-direction: column;
     position: relative;
     width: 0px;
     height: 0px;
+    
 
 
 }
@@ -337,14 +360,12 @@ body {
     cursor: pointer;
     appearance: slider-vertical;
     display: none;
+    
 }
 
 
 
 
 
-.aboveBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+
+
