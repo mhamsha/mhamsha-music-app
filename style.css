@@ -260,7 +260,7 @@ body {
 }
 
 .songbuttons {
-    margin: 5px;
+    
 }
 
 .songbuttonsUl {
@@ -275,10 +275,17 @@ body {
 
 .songbuttons ul li {
     list-style: none;
-    margin: 5px 0px 0px 3px;
     cursor: pointer;
-}
+    padding: 2px;
 
+ 
+}
+.songbuttons ul li img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    
+}
 .songbuttons li {
     filter: invert(1);
     list-style: none;
@@ -344,8 +351,9 @@ body {
     height: 20px;
     cursor: pointer;
     position: absolute;
-    right: 20px;
-    bottom: -10px;
+    right: 15px;
+    bottom: -9px;
+    
 
 }
 
@@ -359,9 +367,18 @@ body {
     outline: none;
     cursor: pointer;
     appearance: slider-vertical;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+    
     
 }
+
+.volumeBtn .visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
 
 
 

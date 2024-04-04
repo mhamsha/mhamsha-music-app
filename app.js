@@ -188,10 +188,11 @@ async function main(folderName = "daily mix 1") {
           return `${minutes}:${seconds}`;
         }
         // * To show the time of the song
+        // console.log(secondsToMinutes(audio.currentTime), secondsToMinutes(audio.duration));
         document.querySelector(".songTime").innerHTML = `${secondsToMinutes(
           audio.currentTime
         )}/${secondsToMinutes(audio.duration)}`;
-        // * add the current time of the song the seek bar when meida querry hit 600px max width or minunum width
+        // * add the current time of the song the seek bar when meida querry hit 768px max width or minunum width
         if (window.matchMedia("(max-width: 768px)").matches) {
           document.querySelector(
             ".songTimeCurr"
@@ -259,14 +260,25 @@ async function main(folderName = "daily mix 1") {
   });
   // * changing the src img of volume btn
   let volImg = document.querySelector(".volumeBtn img");
+
   volImg.addEventListener("click", () => {
     if (volImg.src.endsWith("svg/vol-on.svg")) {
       volImg.src = "svg/vol-off.svg";
-      volImg.style.color = "green";
+
       audio.volume = 0;
     } else {
+      if (volumeUnit != 0) {
+        volImg.src = "svg/vol-on.svg";
+        audio.volume = volumeUnit;
+      }
+    }
+  });
+  volSlider.addEventListener("click", () => {
+    if (volumeUnit == 0) {
+      console.log(volumeUnit);
+      volImg.src = "svg/vol-off.svg";
+    } else {
       volImg.src = "svg/vol-on.svg";
-      audio.volume = volumeUnit;
     }
   });
 
@@ -274,33 +286,50 @@ async function main(folderName = "daily mix 1") {
   let volDiv = document.querySelector(".volumeBtn");
   let timeOutId;
 
-  volImg.addEventListener("mouseover", () => {
-    volSlider.style.display = "block";
-  });
-
-  volDiv.addEventListener("mouseout", () => {
-    timeOutId = setTimeout(() => {
-      volSlider.style.display = "none";
-    }, 500);
-  });
-  volDiv.addEventListener("mouseover", () => {
+  function volDivMouseOver() {
     clearTimeout(timeOutId);
-  });
+    volSlider.classList.add("visible");
+  }
+
+  function volDivMouseOut() {
+    timeOutId = setTimeout(() => {
+      volSlider.classList.remove("visible");
+    }, 100);
+  }
+
+  function checkWindowSize() {
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      volSlider.classList.add("visible");
+      volDiv.removeEventListener("mouseover", volDivMouseOver);
+      volDiv.removeEventListener("mouseout", volDivMouseOut);
+    } else {
+      volSlider.classList.remove("visible");
+      volDiv.addEventListener("mouseover", volDivMouseOver);
+      volDiv.addEventListener("mouseout", volDivMouseOut);
+    }
+  }
+
+  checkWindowSize();
+  window.addEventListener("resize", checkWindowSize);
 }
+
+// * for skipSecForward and skipSecBackward functionality
+let skipSecForward = document.querySelector(".skipSecForward");
+let skipSecBackward = document.querySelector(".skipSecBackward");
+skipSecForward.addEventListener("click", () => {
+  audio.currentTime += 10;
+});
+skipSecBackward.addEventListener("click", () => {
+  audio.currentTime -= 10;
+});
 
 // *  Event showing left side and hide right side and vice versa
 document.querySelector(".backBtn").addEventListener("click", () => {
- 
   document.querySelector(".leftSide").style.left = "0";
-  
-  
- 
-  
 });
 document.querySelector(".forwardBtn").addEventListener("click", () => {
-  
   document.querySelector(".leftSide").style.left = "-100%";
-
 });
+
 displayAlbums();
 main();
