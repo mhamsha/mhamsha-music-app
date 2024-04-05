@@ -284,26 +284,32 @@ async function main(folderName = "daily mix 1") {
 
   // * someone hover the volume btn then the volume bar will be shown otherwise hidden
   let volDiv = document.querySelector(".volumeBtn");
+  let rangeWrapper = document.querySelector(".rangeWrapper");
   let timeOutId;
 
   function volDivMouseOver() {
     clearTimeout(timeOutId);
     volSlider.classList.add("visible");
+    rangeWrapper.classList.add("hover");
   }
 
   function volDivMouseOut() {
     timeOutId = setTimeout(() => {
       volSlider.classList.remove("visible");
+      rangeWrapper.classList.remove("hover");
     }, 100);
   }
 
   function checkWindowSize() {
     if (window.matchMedia("(max-width: 768px)").matches) {
       volSlider.classList.add("visible");
+      rangeWrapper.classList.add("hover");
       volDiv.removeEventListener("mouseover", volDivMouseOver);
       volDiv.removeEventListener("mouseout", volDivMouseOut);
     } else {
       volSlider.classList.remove("visible");
+      rangeWrapper.classList.remove("hover");
+      
       volDiv.addEventListener("mouseover", volDivMouseOver);
       volDiv.addEventListener("mouseout", volDivMouseOut);
     }
