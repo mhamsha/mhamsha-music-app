@@ -61,12 +61,12 @@
 
           <!-- <div class="playSection"> -->
           <div class="playSection">
-            <div class="songName">Song--Name</div>
+            <div class="songName"><p></p></div>
             <div class="songlineBar"></div>
             <div class="songcircle"></div>
             <div class="songbuttons">
               <ul class="songbuttonsUl">
-                <li><img src="svg/random.svg" alt="random"></li>
+                <li><img src="svg/random.svg" alt="random" /></li>
                 <li>
                   <img
                     src="svg/skipSecBackward.svg"
@@ -75,7 +75,9 @@
                   />
                 </li>
                 <li>
-                  <img class="prev" src="svg/skipPrev.svg" alt="previous" />
+                  <button type="button" class="prev">
+                    <img src="svg/skipPrev.svg" alt="previous" />
+                  </button>
                 </li>
                 <li>
                   <img
@@ -84,7 +86,11 @@
                     alt="play"
                   />
                 </li>
-                <li><img class="next" src="svg/skipNext.svg" alt="next" /></li>
+                <li>
+                  <button type="button" class="next">
+                    <img src="svg/skipNext.svg" alt="next" />
+                  </button>
+                </li>
                 <li>
                   <img
                     src="svg/skipSecForward.svg"
@@ -92,8 +98,8 @@
                     class="skipSecForward"
                   />
                 </li>
-               <li><img src="svg/loopNo.svg" alt="Loop"></li>
-               <li><img src="svg/playBackSpeed.svg" alt="playBackSpeed"></li>
+                <li><img class="loopBtn" src="svg/loopNo.svg" alt="Loop" /></li>
+                <li><img src="svg/playBackSpeed.svg" alt="playBackSpeed" /></li>
               </ul>
             </div>
             <div class="songTime">00:00/00:00</div>
@@ -102,12 +108,13 @@
             <div class="volumeBtn">
               <div class="rangeWrapper volumeBtn">
                 <input
-                type="range"
-                min="0"
-                max="100"
-                value="50"
-                class="slider"
-                id="myRange"
+                  step="10"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                  class="slider"
+                  id="myRange"
                 />
               </div>
               <img src="svg/vol-on.svg" alt="volume" />

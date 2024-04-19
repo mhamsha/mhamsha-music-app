@@ -324,9 +324,28 @@ body {
 
 .songName {
     color: white;
-    margin-left: 10px;
-    font-size: 13px;
-    width: 240px;
+    margin-left: 11px;
+    font-size: 12px;
+    width: 185px;
+    white-space: nowrap;
+    overflow: hidden;    
+    position: relative;
+    height: 22px;
+}
+.songName p{
+    position: absolute;
+    animation: textAnimate 12s linear   infinite;
+    
+}
+@keyframes  textAnimate {
+    0% {
+        transform: translateX(185px);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+    
 }
 
 .songTime {
@@ -438,7 +457,7 @@ body {
     transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
 }
 
-.rangeWrapper input{
+.rangeWrapper input[step]{
     background-color: transparent;
     background-image: repeating-linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2) calc(12.5% - 1px), #05051a 12.5%);
 }

@@ -6,10 +6,11 @@ let reducedSongsName = [];
 let songImage;
 let volumeUnit = 0.5;
 
+
 async function getSongs(folder) {
   currFolder = folder;
-  // const url = `https://127.0.0.1:5500/${folder}/`;
-  const url = `http://192.168.100.2:5500/${folder}/`;
+  const url = `https://127.0.0.1:5500/${folder}/`;  
+  // const url = `http://192.168.100.2:5500/${folder}/`;
   let songsName = [];
   const response = await fetch(url);
   const data = await response.text();
@@ -39,8 +40,8 @@ async function getSongs(folder) {
 }
 async function displayAlbums() {
   // console.log("displaying albums")
-  // let a = await fetch(`https://127.0.0.1:5500/songs/`);
-  let a = await fetch(`http://192.168.100.2:5500/songs/`);
+  let a = await fetch(`https://127.0.0.1:5500/songs/`);
+  // let a = await fetch(`http://192.168.100.2:5500/songs/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -82,12 +83,28 @@ async function displayAlbums() {
     });
   });
 }
+let songNamePara = document.querySelector(".songName p")
 function reducedSongsNameFunc() {
   for (let i = 0; i < songsName.length; i++) {
     element = songsName[i].split(".mp3")[0].split("(")[0];
     reducedSongsName.push(element);
     songUL.innerHTML += `<li><div>${element}</div>${songImage}</li>`;
+    
   }
+  if(songNamePara.style.animationName == "textAnimate"){
+    songNamePara.style.animationName="null";
+    console.log(songNamePara.style.animationName=="textAnimate")
+  }else{
+    songNamePara.style.animationName="textAnimate";
+  }
+
+  songNamePara.addEventListener("mouseover", () => {
+    songNamePara.style.cursor = "default";
+    songNamePara.style.animationPlayState = "paused";
+  })
+  songNamePara.addEventListener("mouseout", () => {
+    songNamePara.style.animationPlayState = "running";
+  })
 }
 async function main(folderName = "daily mix 1") {
   songUL = document.querySelector(".songList");
@@ -104,9 +121,25 @@ async function main(folderName = "daily mix 1") {
   // * Add event listener to the all img elements
   imgElements.forEach(function (img, index) {
     img.addEventListener("click", () => {
+      if(imgElements.length - 1 == index) {
+        next.disabled = true;
+        prev.disabled = false;
+        
+      }else if(index == 0){
+        next.disabled = false;
+        prev.disabled = true;
+      }
+
       // * This is for side bar song name
       if (img.src.endsWith("svg/musicStop.svg")) {
-        document.querySelector(".songName").innerHTML = reducedSongsName[index];
+       
+        // document.querySelector(".songName").innerHTML = reducedSongsName[index];
+
+
+        songNamePara.innerHTML = reducedSongsName[index];
+
+
+
         // * This is for the song name in the middle
         if (previousImg) {
           previousImg.src = "svg/musicStop.svg";
@@ -114,9 +147,12 @@ async function main(folderName = "daily mix 1") {
           previousImg = img;
           playCircle.src = "svg/playCircle.svg";
           presentImg = img;
+          
+
         }
         //* this is else condition for the song name in the middle
         else {
+         
           img.src = "svg/musicPlay.svg";
           previousImg = img;
           playCircle.src = "svg/playCircle.svg";
@@ -163,6 +199,7 @@ async function main(folderName = "daily mix 1") {
               playCircle.src = "svg/playCircle.svg";
               audio.play();
               audio.volume = volumeUnit;
+
             } else {
               // console.log(presentImg);
             }
@@ -202,21 +239,35 @@ async function main(folderName = "daily mix 1") {
           ).innerHTML = `${secondsToMinutes(audio.duration)}`;
         }
         // * To move the seek bar from left to right
-        document.querySelector(".songcircle").style.left =
+        let songcircle = document.querySelector(".songcircle");
+        songcircle.style.left =
           (audio.currentTime / audio.duration) * 98.5 + "%";
+
+        // * automatically play the next song when the current song ends
+        if (audio.currentTime == audio.duration) {
+          if (!(imgElements.length - 1 == index)) {
+            nextSongPlay();
+          } else {
+            img.src = "svg/musicStop.svg";
+            playCircle.src = "svg/pauseCircle.svg";
+            songcircle.style.left = "0%";
+            next.disabled = true;
+            prev.disabled = true;
+          }
+        }
       });
     });
   });
-  // * This is for skip next/previous button functionality
+  // * Next and Previous button functionality
   let next = document.querySelector(".next");
   let prev = document.querySelector(".prev");
-  prev.addEventListener("click", () => {
+  const prevSongPlay = () => {
     let index = songs.indexOf(audio.src);
 
     index = (index - 1 + songs.length) % songs.length;
     // console.log(index)
     audio.src = songs[index];
-    document.querySelector(".songName").innerHTML = reducedSongsName[index];
+    songNamePara.innerHTML = reducedSongsName[index];
     if (previousImg) {
       previousImg.src = "svg/musicStop.svg";
       imgElements[index].src = "svg/musicPlay.svg";
@@ -225,26 +276,42 @@ async function main(folderName = "daily mix 1") {
       presentImg = imgElements[index];
     }
 
+    if (index == 0) {
+      prev.disabled = true;
+      next.disabled = false;
+    } else {
+      next.disabled = false;
+    }
+
     audio.play();
     audio.volume = volumeUnit;
-  });
+  };
 
-  next.addEventListener("click", () => {
+  const nextSongPlay = () => {
     let index = songs.indexOf(audio.src);
     index = (index + 1) % songs.length;
     audio.src = songs[index];
-    document.querySelector(".songName").innerHTML = reducedSongsName[index];
+    songNamePara.innerHTML = reducedSongsName[index];
     if (previousImg) {
       previousImg.src = "svg/musicStop.svg";
       imgElements[index].src = "svg/musicPlay.svg";
       playCircle.src = "svg/playCircle.svg";
       previousImg = imgElements[index];
       presentImg = imgElements[index];
-    }
 
-    audio.play();
-    audio.volume = volumeUnit;
-  });
+      audio.play();
+      audio.volume = volumeUnit;
+    }
+    if (index == songs.length - 1) {
+      next.disabled = true;
+      prev.disabled = false;
+    } else {
+      prev.disabled = false;
+    }
+  };
+  prev.addEventListener("click", prevSongPlay);
+  next.addEventListener("click", nextSongPlay);
+
   // * This is for the seek bar click functionality
   let songBar = document.querySelector(".songlineBar");
   songBar.addEventListener("click", (e) => {
@@ -309,7 +376,7 @@ async function main(folderName = "daily mix 1") {
     } else {
       volSlider.classList.remove("visible");
       rangeWrapper.classList.remove("hover");
-      
+
       volDiv.addEventListener("mouseover", volDivMouseOver);
       volDiv.addEventListener("mouseout", volDivMouseOut);
     }
@@ -336,6 +403,8 @@ document.querySelector(".backBtn").addEventListener("click", () => {
 document.querySelector(".forwardBtn").addEventListener("click", () => {
   document.querySelector(".leftSide").style.left = "-100%";
 });
+
+// * For the loop button functionality
 
 displayAlbums();
 main();
